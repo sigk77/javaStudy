@@ -56,9 +56,10 @@ public class ¹è¿­8 {
 	    for(int i1=0;i1<3;i1++)
 	    {
 	    	System.out.println(kor[i1]+" "+
-	    eng[i1]+" "+math[i1]+" "+total[i1]+" "+avg[i1]);
+	    eng[i1]+" "+math[i1]+" "+total[i1]+" "+rank[i1]+" "+avg[i1]);
 	    }
 
+	    }
 	}
-
 }
+
