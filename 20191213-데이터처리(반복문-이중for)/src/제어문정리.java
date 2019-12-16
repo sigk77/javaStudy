@@ -28,15 +28,22 @@ public class 제어문정리 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		aaa();
-		aaa();
-		aaa();
+		
+		
+		
+		
+		
+		
+		
+		/*
+		 * aaa(); aaa(); aaa();
+		 */
 	}
 	public static void aaa() 
 	{
-		int a=10;
-		System.out.println("a="+a);
-		++a;
+		/*
+		 * int a=10; System.out.println("a="+a); ++a;
+		 */
 	}
 }
 
