@@ -32,6 +32,9 @@ public class ¸Þ¼Òµå12 {
 	}
 		static void process() {
 			calc();
+			int op = 0;
+			int a = 0;
+			int b = 0;
 			System.out.println(a+op+b);
 		}
 		

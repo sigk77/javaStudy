@@ -2,7 +2,7 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 public class 메소드8 {
-	static void[] strWeek()
+	static void strWeek()
 	{
 		int strWeek[] = new int[7];
 		char[] strWeek1={'일','월','화','수','목','금','토'};
