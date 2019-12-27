@@ -4,6 +4,7 @@ import java.awt.Event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class MainForm extends JFrame implements ActionListener{
+	GameRoom gr=new GameRoom();
 	Login login=new Login();
 	WaitRoom wr=new WaitRoom();
 	CardLayout card=new CardLayout();
