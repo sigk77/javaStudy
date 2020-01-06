@@ -32,6 +32,7 @@ class Board{
  * 		
  * 		class A
  * 		{
+ * 
  * 			void display(){}
  * 		}
  * 		class B extends A
@@ -56,6 +57,10 @@ class DataBoard extends Board{
 	public void write() {
 		System.out.println("DataBoard:write(): 글쓰기 + 파일 업로드");
 	}
+	public void write(int a)
+	{
+		System.out.println("");
+	}
 
 	@Override
 	public void content() {
@@ -74,6 +79,13 @@ public class MainClass2 {
 		 * db.update(); db.delete(); db.find();
 		 */
 		Board gb=new GalleryBoard();
+		// gb가 가지고 있는 메소드만
+		/*
+		 * 
+		 * 	생성자
+		 * 	====
+		 * 	상위클래스 변수명 
+		 */
 		gb.list();
 		gb.write();
 		gb.content();
@@ -89,6 +101,17 @@ public class MainClass2 {
 		gb.update();
 		gb.delete();
 		gb.find();
+		
+		/*
+		 * 	상위 클래스로 하위클래스의 생성
+		 * 
+		 * 	Borard gb=new DataBoard() => 변경된 메소드만 호출이 가능 
+		 * 	  int a         int b,a
+		 * 	============================= 상속을 받는 경우
+		 * 	=> 상위 클래스는 하위 클래스에 추가된 메소드나 변수에 접근이 불가능
+		 * 	=> 변수 : 클래스 타입 
+		 * 	=> 메소드	: 생성자
+		 */
 	}
 
 }

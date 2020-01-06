@@ -125,12 +125,12 @@ public class MainsClass {
 		s.age=30;
 		s.name="홍길동";
 		s.loc="서울";
-		s.dept="개발부:";
+		s.dept="개발부";
 		
-		System.out.println("이름"+s.name);
-		System.out.println("나이"+s.age);
-		System.out.println("이름"+s.loc);
-		System.out.println("이름"+s.dept);
+		System.out.println("이름: "+s.name);
+		System.out.println("나이: "+s.age);
+		System.out.println("지역: "+s.loc);
+		System.out.println("부서: "+s.dept);
 
 	}
 
