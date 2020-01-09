@@ -218,7 +218,7 @@ public class MainClass2 extends JFrame implements ActionListener{
 					b1.setEnabled(true);
 				}
 			}
-			tf.setText("777");
+			tf.setText("");
 			tf.requestFocus();
 		}
 	}
