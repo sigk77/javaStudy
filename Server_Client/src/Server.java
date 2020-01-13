@@ -22,6 +22,7 @@ public class Server {
 		    }catch (Exception e) {
 		    	e.printStackTrace();
 		    }
+		
 		}
 	}
 class Sender extends Thread {
