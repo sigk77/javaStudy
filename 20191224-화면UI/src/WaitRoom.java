@@ -3,21 +3,21 @@ import java.awt.*;
 import javax.swing.table.*;
 public class WaitRoom extends JPanel {
 	JTable table1,table2;
-	DefaultTableModel mode1,mode2;
+	DefaultTableModel model1,model2;
 	JTextPane tp;
 	JTextField tf;
 	JButton b1,b2,b3,b4,b5,b6;
 	WaitRoom(){
 		String[] col1= {"방이름","공개/비공개","인원"};
 		String[][] row1=new String[0][3];
-		mode1=new DefaultTableModel(row1,col1);
-		table1=new JTable(mode1);
+		model1=new DefaultTableModel(row1,col1);
+		table1=new JTable(model1);
 		JScrollPane Js1=new JScrollPane(table1);
 		
 		String[] col2= {"방이름","공개/비공개","인원"};
 		String[][] row2=new String[0][3];
-		mode2=new DefaultTableModel(row2,col2);
-		table2=new JTable(mode2);
+		model2=new DefaultTableModel(row2,col2);
+		table2=new JTable(model2);
 		JScrollPane Js2=new JScrollPane(table2);
 		
 		setLayout(null);
