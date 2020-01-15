@@ -15,7 +15,7 @@ import com.sist.dao.*;
 public class MainForm extends JFrame implements ActionListener,Runnable{
 	Login login=new Login();
 	WaitRoom wr=new WaitRoom();
-	//GameRoom gr=new GameRoom();
+	GameRoom gr=new GameRoom();
 	CardLayout card=new CardLayout();
 	//서버연결과 관련된 라이브러리
 	Socket s; //서버 연결
@@ -23,7 +23,7 @@ public class MainForm extends JFrame implements ActionListener,Runnable{
 	BufferedReader in; //서버에서 응답한 데이터를 받음
 	 MainForm() {
 		 setLayout(card);
-		 //add(GAME",gr);
+		  add("GAME",gr);
 		  add("Center",login);
 		  add("WR",wr);
 

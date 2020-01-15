@@ -14,7 +14,16 @@ public class WaitRoom extends JPanel{
     	  la.setIcon(new ImageIcon(getImageSizeChange(new ImageIcon("c:\\image\\file.jpg"),380,150)));
     	  String[] col1={"방이름","공개/비공개","인원"};
     	  String[][] row1=new String[0][3];
-    	  model1=new DefaultTableModel(row1,col1);
+    	  model1=new DefaultTableModel(row1,col1)
+    	  {
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+    	  };
+    	  //model1 상속없이 오버라이딩하는 클래스 (익명의 클래스)
     	  table1=new JTable(model1);
     	  JScrollPane js1=new JScrollPane(table1);
     	  
@@ -59,6 +68,10 @@ public class WaitRoom extends JPanel{
     	  add(js3);
     	  add(js1);
     	  add(js2);
+    	  
+		/*
+		 * String[] data= {"빨리와","공개","1/6"}; model1.addRow(data);
+		 */
       }
       public Image getImageSizeChange(ImageIcon icon,int width,int height)
       {

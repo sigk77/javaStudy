@@ -10,7 +10,9 @@ public class Server implements Runnable{
 	private ServerSocket ss;
 	private final int PORT=8888;
 	// 접속자 저장 공간 
-	private Vector<Client> waitVc=new Vector<Client>();
+	private Vector<Client> waitVc=new Vector<Client>();  // <Server.Client> 였어야하는데 Server클래스 안이라 생략해줌
+	private Vector<Room> roomVc=new Vector<Room>(); //영구적으로 저장되는게 아니라 DB대신 여기에
+
 	public Server()
 	{
 		try
@@ -43,6 +45,7 @@ public class Server implements Runnable{
 	class Client extends Thread
 	{
 		String id,name,sex,pos;
+		int avata;
 		// pos=> 방위치 
 		// 통신 
 		Socket s;// 통신장비 
@@ -97,11 +100,112 @@ public class Server implements Runnable{
 						        +user.id+"|"+user.name+"|"
 						        +user.sex+"|"+user.pos);
 						   }
+						   
+						   // 로그인 한 사람에게 개설된 방정보 전송 messeageTo(로그인한 당사자에게만)
+						   for(Room room:roomVc)
+						   {
+							   messageTo(Function.MAKEROOM+"|"+room.roomName+"|"
+									   +room.roomState+"|"
+									   +room.current+"/"+room.maxcount);
+						   }
+						   
 						   break;
 					   }
 					   case Function.WAITCHAT:
 					   {
 						   messageAll(Function.WAITCHAT+"|["+name+"]"+st.nextToken());
+						   break;
+					   }
+					   case Function.EXIT:
+					   {
+						   String mid=id;
+						   for(int i=0;i<waitVc.size();i++)
+						   {
+							   Client user=waitVc.get(i);
+							   if(mid.equals(user.id))
+							   {
+								   // 윈도우 종료
+								   messageTo(Function.MYEXIT+"|");
+								   // Vector에서 제거
+								   waitVc.remove(i);
+								   // 닫기(통신 종료)
+								   in.close();
+								   out.close();
+								   break;
+							   }
+						   }
+						   // 전체 메세지 => 나가는 유저를 테이블에서 삭제
+						   messageAll(Function.EXIT+"|"+mid);
+						   break;
+					   }
+					   case Function.MAKEROOM: //MAKEROOM을 눌렀다면
+					   {
+						/*
+						 * Function.MAKEROOM+"|"+rn+"|" +rs+"|"+rp+"|"+inwon+
+						 */
+						   
+						   Room room=new Room(st.nextToken(),st.nextToken(), st.nextToken(), Integer.parseInt(st.nextToken()));
+						   room.userVc.add(this);
+						   
+						   roomVc.add(room);
+						   pos=room.roomName;
+						   
+						   messageAll(Function.MAKEROOM+"|"+room.roomName+"|"
+								   +room.roomState+"|"
+								   +room.current+"/"+room.maxcount);   //개설된 방 정보 갱신
+						   // 방에 들어가게 만든다
+						   messageTo(Function.ROOMIN+"|"+room.roomName+"|"
+								   +id+"|"+sex+"|"+avata);
+						   
+						   break;
+					   }
+					   case Function.ROOMIN:
+					   {
+						   // Function.ROOMIN+"|"+rn 위에서 적었으로
+						   String rn=st.nextToken();
+						   /*
+						    *  1. 방이름을 받는다
+						    *  2. 방을 찾는다(roomVc)
+						    *  3. pos,current를 변경
+						    *  ===================
+						    *  = 방에 있는 사람 처리 => ROOMADD
+						    *  	 1. 방에 입장하는 사람의 정보 전송(id,avata..)
+						    *    2. 입장메세지 전송
+						    *  = 방에 들어가는 사람 처리
+						    *    1. 방에 들어가라 => ROOMIN
+						    *    2. 방에 있는 사람들의 정보를 보내준다
+						    *  = 대기실 변경
+						    *    인원수가 변경 => 메세지 전송
+						    */
+						   for(Room room:roomVc)
+						   {
+							   if(rn.equals(room.roomName))//방찾기
+							   {
+								   pos=room.roomName;
+								   room.current++;
+								   
+								   for(Client user:room.userVc)
+								   {
+									   user.messageTo(Function.ROOMADD+"|"
+											   +id+"|"+sex+"|"+avata);
+									   user.messageTo(Function.ROOMCHAT
+									   		+"|[알림☞]"+id+"님이 입장하셨습니다");
+								   }
+								   // 본인 처리
+								   room.userVc.add(this);
+								   messageTo(Function.ROOMIN+"|"+room.roomName+"|"
+										   +id+"|"+sex+"|"+avata);
+								   
+								   for(Client user:room.userVc)
+								   {
+									   if(!id.equals(user.id))
+									   {
+										   messageTo(Function.ROOMADD+"|"
+												   +user.id+"|"+user.sex+"|"+user.avata);
+									   }
+								   }
+							   }
+						   }
 						   break;
 					   }
 					}
