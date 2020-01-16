@@ -13,7 +13,7 @@ public class MainForm extends JFrame implements ActionListener,Runnable,MouseLis
    // extends 뒤에는 하나만 implements 뒤에 여러개가 오면 다중상속 (인터페이스에서만 가능)
 	Login login=new Login();
    WaitRoom wr=new WaitRoom();
-   GameRoom gr=new GameRoom();
+   GameRoom1 gr=new GameRoom1();
    MakeRoom mr=new MakeRoom();
    CardLayout card=new CardLayout();
    // 서버 연결과 관련된 라이브러리
@@ -50,8 +50,8 @@ public class MainForm extends JFrame implements ActionListener,Runnable,MouseLis
 	  
 	  // 방안에서 채팅 등록
 	  gr.tf.addActionListener(this);
-	  gr.b5.addActionListener(this); // 방나가기 버튼
-	  gr.b2.addActionListener(this); // 강퇴
+	  gr.b3.addActionListener(this); // 방나가기 버튼
+//	  gr.b2.addActionListener(this); // 강퇴
    }
    public static void main(String[] args) {
 	   try
@@ -214,20 +214,20 @@ public class MainForm extends JFrame implements ActionListener,Runnable,MouseLis
 			
 			gr.tf.setText("");
 		}
-		else if(e.getSource()==gr.b5)
+		else if(e.getSource()==gr.b3)
 		{
 			try
 			{
 				out.write((Function.ROOMOUT+"|"+myRoom+"\n").getBytes());
 			}catch(Exception ex) {}
 		}
-		else if(e.getSource()==gr.b2) {
-			String youId=gr.box.getSelectedItem().toString();
-			try
-			{
-				out.write((Function.KANG+"|"+myRoom+"|"+youId+"\n").getBytes());
-			}catch(Exception ex) {}
-		}
+//		else if(e.getSource()==gr.b2) {
+//			String youId=gr.box.getSelectedItem().toString();
+//			try
+//			{
+//				out.write((Function.KANG+"|"+myRoom+"|"+youId+"\n").getBytes());
+//			}catch(Exception ex) {}
+//		}
 	}// actionperfomed 종료
 	public void connection(String userData)
 	{
@@ -337,7 +337,7 @@ public class MainForm extends JFrame implements ActionListener,Runnable,MouseLis
 					  }
 					  //화면이동
 					  card.show(getContentPane(), "GAME");
-					  for(int i=0;i<6;i++)  // true,false로 방의 빈자리에 유저가 있는지 없는지 판단 sw의 역할
+					  for(int i=0;i<2;i++)  // true,false로 방의 빈자리에 유저가 있는지 없는지 판단 sw의 역할
 					  {
 						  if(gr.sw[i]==false)
 						  {
@@ -368,7 +368,7 @@ public class MainForm extends JFrame implements ActionListener,Runnable,MouseLis
 						  temp="w"+avata; // m1.png,w2.png
 					  }
 					  card.show(getContentPane(), "GAME");
-					  for(int i=0;i<6;i++)  // true,false로 방의 빈자리에 유저가 있는지 없는지 판단 sw의 역할
+					  for(int i=0;i<2;i++)  // true,false로 방의 빈자리에 유저가 있는지 없는지 판단 sw의 역할
 					  {
 						  if(gr.sw[i]==false)
 						  {
@@ -381,7 +381,7 @@ public class MainForm extends JFrame implements ActionListener,Runnable,MouseLis
 							  break;
 						  }
 					  }
-					//  gr.box.addItem(id);
+//					  gr.box.addItem(id);
 					  break;
 				  }
 				  case Function.ROOMCHAT:
@@ -446,7 +446,7 @@ public class MainForm extends JFrame implements ActionListener,Runnable,MouseLis
 			case Function.ROOMOUT:
 			{
 				String id=st.nextToken();
-				for(int i=0;i<6;i++)
+				for(int i=0;i<2;i++)
 				{
 					String mid=gr.ids[i].getText();
 					if(id.equals(mid))
@@ -478,13 +478,13 @@ public class MainForm extends JFrame implements ActionListener,Runnable,MouseLis
 				card.show(getContentPane(), "WR");
 				break;
 			}
-			case Function.KANG:
-			{
-				String rn=st.nextToken();
-				JOptionPane.showMessageDialog(this, rn+"방에서 강퇴되었습니다");
-				out.write((Function.ROOMOUT+"|"+rn+"|\n").getBytes());
-				break;
-			}
+//			case Function.KANG:
+//			{
+//				String rn=st.nextToken();
+//				JOptionPane.showMessageDialog(this, rn+"방에서 강퇴되었습니다");
+//				out.write((Function.ROOMOUT+"|"+rn+"|\n").getBytes());
+//				break;
+//			}
 		}
 	}
 }catch(Exception ex) {}
