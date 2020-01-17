@@ -239,6 +239,7 @@ public class Server implements Runnable{
 									   user.messageTo(Function.ROOMCHAT+"|["+name+"]"+strMsg);
 								   }
 							   }
+							   
 						   }
 						   break;
 					   }
